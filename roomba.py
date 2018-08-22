@@ -66,6 +66,12 @@ class PolicyGen:
 
         x,y = agent.get_loc()
         action = 0
+        
+        # 0 -> do nothing/stay
+        # 1 -> up
+        # 2 -> right
+        # 3 -> down
+        # 4 -> left
         # rand_action = random.choice(0, 5)
         # if obstacle at left then choose any direction except left
 
