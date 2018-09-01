@@ -1,4 +1,11 @@
 """Roomba agents policy generator.
+
+This module demonstrates an example of a simple heuristic policy generator
+for Capture the Flag environment.
+    http://github.com/osipychev/missionplanner/
+
+DOs/Denis Osipychev
+    http://www.denisos.com
 """
 
 import numpy as np
@@ -26,7 +33,10 @@ class PolicyGen:
         """
         self.random = np.random
         self.free_map = free_map
-        # self.heading_right = [True] * len(agent_list) #: Attr to track directions.
+        self.heading_right = [True] * len(agent_list) #: Attr to track directions.
+        self.heading_left = [True] * len(agent_list)
+        self.heading_north = [True] * len(agent_list)
+        self.heading_south = [True] * len(agent_list)
 
     def gen_action(self, agent_list, observation, free_map=None):
         """Action generation method.
@@ -66,17 +76,11 @@ class PolicyGen:
 
         x,y = agent.get_loc()
         action = 0
-        
-        # 0 -> do nothing/stay
-        # 1 -> up
-        # 2 -> right
-        # 3 -> down
-        # 4 -> left
         # rand_action = random.choice(0, 5)
         # if obstacle at left then choose any direction except left
 
         action = self.random.randint(0, 5)
-        
+
         if (x>0 and obs[x-1][y] != self.free_map[x][y]):
             action = int(random.choice([0,1,2,3]))
 

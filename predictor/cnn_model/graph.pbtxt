@@ -7883,7 +7883,7 @@ node {
   }
 }
 node {
-  name: "gradients/sparse_softmax_cross_entropy_loss/Sum_1_grad/Const"
+  name: "gradients/sparse_softmax_cross_entropy_loss/Sum_1_grad/Tile/multiples"
   op: "Const"
   attr {
     key: "_output_shapes"
@@ -7919,7 +7919,7 @@ node {
   name: "gradients/sparse_softmax_cross_entropy_loss/Sum_1_grad/Tile"
   op: "Tile"
   input: "gradients/sparse_softmax_cross_entropy_loss/Sum_1_grad/Reshape"
-  input: "gradients/sparse_softmax_cross_entropy_loss/Sum_1_grad/Const"
+  input: "gradients/sparse_softmax_cross_entropy_loss/Sum_1_grad/Tile/multiples"
   attr {
     key: "T"
     value {
@@ -8009,7 +8009,7 @@ node {
   }
 }
 node {
-  name: "gradients/sparse_softmax_cross_entropy_loss/Sum_grad/Const"
+  name: "gradients/sparse_softmax_cross_entropy_loss/Sum_grad/Tile/multiples"
   op: "Const"
   attr {
     key: "_output_shapes"
@@ -8048,7 +8048,7 @@ node {
   name: "gradients/sparse_softmax_cross_entropy_loss/Sum_grad/Tile"
   op: "Tile"
   input: "gradients/sparse_softmax_cross_entropy_loss/Sum_grad/Reshape"
-  input: "gradients/sparse_softmax_cross_entropy_loss/Sum_grad/Const"
+  input: "gradients/sparse_softmax_cross_entropy_loss/Sum_grad/Tile/multiples"
   attr {
     key: "T"
     value {
@@ -8173,7 +8173,7 @@ node {
   }
 }
 node {
-  name: "gradients/sparse_softmax_cross_entropy_loss/Mul_grad/Mul"
+  name: "gradients/sparse_softmax_cross_entropy_loss/Mul_grad/mul"
   op: "Mul"
   input: "gradients/sparse_softmax_cross_entropy_loss/Sum_grad/Tile"
   input: "sparse_softmax_cross_entropy_loss/Const"
@@ -8199,7 +8199,7 @@ node {
 node {
   name: "gradients/sparse_softmax_cross_entropy_loss/Mul_grad/Sum"
   op: "Sum"
-  input: "gradients/sparse_softmax_cross_entropy_loss/Mul_grad/Mul"
+  input: "gradients/sparse_softmax_cross_entropy_loss/Mul_grad/mul"
   input: "gradients/sparse_softmax_cross_entropy_loss/Mul_grad/BroadcastGradientArgs"
   attr {
     key: "T"
@@ -8261,7 +8261,7 @@ node {
   }
 }
 node {
-  name: "gradients/sparse_softmax_cross_entropy_loss/Mul_grad/Mul_1"
+  name: "gradients/sparse_softmax_cross_entropy_loss/Mul_grad/mul_1"
   op: "Mul"
   input: "sparse_softmax_cross_entropy_loss/xentropy/xentropy"
   input: "gradients/sparse_softmax_cross_entropy_loss/Sum_grad/Tile"
@@ -8287,7 +8287,7 @@ node {
 node {
   name: "gradients/sparse_softmax_cross_entropy_loss/Mul_grad/Sum_1"
   op: "Sum"
-  input: "gradients/sparse_softmax_cross_entropy_loss/Mul_grad/Mul_1"
+  input: "gradients/sparse_softmax_cross_entropy_loss/Mul_grad/mul_1"
   input: "gradients/sparse_softmax_cross_entropy_loss/Mul_grad/BroadcastGradientArgs:1"
   attr {
     key: "T"
@@ -15548,7 +15548,7 @@ node {
         dtype: DT_STRING
         tensor_shape {
         }
-        string_val: "_temp_5e826e841b22499b95261d526b08bf51/part"
+        string_val: "_temp_1b4b7aab2ffb42169f389729506c29a4/part"
       }
     }
   }
