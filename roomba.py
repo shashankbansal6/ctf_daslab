@@ -36,7 +36,7 @@ class PolicyGen:
         # initialize all the directions with False
         self.heading_right = [False] * len(agent_list) #: Attr to track directions.
         # self.heading_left = [False] * len(agent_list)
-        self.heading_up = [True] * len(agent_list)
+        self.heading_up = [False] * len(agent_list)
         # self.heading_down = [False] * len(agent_list)
 
     def gen_action(self, agent_list, observation, free_map=None):
@@ -62,13 +62,23 @@ class PolicyGen:
 
         for idx, agent in enumerate(agent_list):
             # First choose a random direction to go into
-            starting_action = self.random.randint(0, 3)
+            starting_action = self.random.randint(0, 5)
             # Initializing the direction based on the starting_action
-            # if starting_action == 1:
-            #     self.heading_up[idx] = True
-            # elif starting_action == 2:
-            #     self.heading_right[idx] = True
+            if starting_action == 1:
+                self.heading_up[idx] = True
+            elif starting_action == 2:
+                self.heading_right[idx] = True
+            # elif starting_action == 3:
+            #     self.heading_down[idx] = True
+            # elif starting_action == 4:
+            #     self.heading_left[idx] = True
+
             a = self.roomba(agent, idx, observation)
+
+            # if starting_action < 3:
+            #     a = self.roomba(agent, idx, observation)
+            # else:
+            #     a = starting_action
             action_out.append(a)
 
         return action_out
@@ -93,9 +103,24 @@ class PolicyGen:
         # and
         #     self.free_map[x][y-1] == self.free_map[x][y])
 
-        # if self.heading_up[idx]:
-        #     if y > 0:
-        #         if self.free_map[x][y-1] == self.free_map[]
+
+        # if (not self.heading_down[idx] and y > 0 and
+        #     obs[x][y-1] == self.free_map[x][y]):
+        #     action = 1
+        # elif (self.heading_down[idx] and y < len(self.free_map[0])-1 and
+        #     obs[x][y+1] == self.free_map[x][y]):
+        #     action = 3
+        # else:
+        #     if (not self.heading_down[idx] and y > 0 and
+        #         obs[x][y-1] != self.free_map[x][y]):
+        #         self.heading_down[idx] = not self.heading_down[idx]
+        #         action = 3
+        #     elif (self.heading_down[idx] and y < len(self.free_map[0])-1 and
+        #         obs[x][y+1] != self.free_map[x][y]):
+        #         self.heading_down[idx] = not self.heading_down[idx]
+        #         action = 1
+        #     else:
+        #         self.heading_down[idx] = not self.heading_down[idx]
 
         if (self.heading_up[idx] and y > 0 and
             obs[x][y-1] == self.free_map[x][y]):
@@ -106,12 +131,32 @@ class PolicyGen:
         else:
             if (self.heading_up[idx] and y > 0 and
                 obs[x][y-1] != self.free_map[x][y]):
+                self.heading_up[idx] = not self.heading_up[idx]
                 action = 3
             elif (not self.heading_up[idx] and y < len(self.free_map[0])-1 and
                 obs[x][y+1] != self.free_map[x][y]):
+                self.heading_up[idx] = not self.heading_up[idx]
                 action = 1
             else:
                 self.heading_up[idx] = not self.heading_up[idx]
+
+        if (self.heading_right[idx] and x < len(self.free_map)-1 and
+            obs[x+1][y] == self.free_map[x][y]):
+            action = 2
+        elif (not self.heading_right[idx] and x > 0 and
+            obs[x-1][y] == self.free_map[x][y]):
+            action = 4
+        else:
+            if (self.heading_right[idx] and x < len(self.free_map)-1 and
+                obs[x+1][y] != self.free_map[x][y]):
+                self.heading_right[idx] = not self.heading_right[idx]
+                action = 4
+            elif (not self.heading_right[idx] and x > 0 and
+                obs[x-1][y] != self.free_map[x][y]):
+                self.heading_right[idx] = not self.heading_right[idx]
+                action = 2
+            else:
+                self.heading_right[idx] = not self.heading_right[idx]
 
         return action
 
